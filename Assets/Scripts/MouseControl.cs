@@ -8,11 +8,11 @@ public class MouseControl : MonoBehaviour
 
     public Transform playerBody;
 
-    public float xRotation = 0f;
+    float xRotation = 0f;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     // Update is called once per frame
