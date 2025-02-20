@@ -3,7 +3,12 @@ guid: 4d629f16b4632c74f91672ee6ba7855b
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: matress_baked
+    second: {fileID: 2100000, guid: b2b97e8dd4d2f874d9e8373a7ea360bd, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
