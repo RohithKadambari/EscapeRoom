@@ -3,7 +3,27 @@ guid: c27a40ed31e498a48b0f11f150d527e1
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: DoorHandle_MetalParts
+    second: {fileID: 2100000, guid: b71d77d33bd2ad141a2e2ce890c94e9c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal_parts
+    second: {fileID: 2100000, guid: 4b96e0865c97052499b19448030fbbce, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: door_Frame
+    second: {fileID: 2100000, guid: 9a0df6dbe05c5eb42ba533a2f9f0645a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: doors
+    second: {fileID: 2100000, guid: f81fffbc482576d418284f7226c99821, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
