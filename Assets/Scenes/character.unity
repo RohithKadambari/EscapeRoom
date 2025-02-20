@@ -326,10 +326,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03559bb65e18bc54d9f2cf0141fe89f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  playerBody: {fileID: 172681499}
-  mouseSensitivity: 500
-  xRotation: 100
+  moveSpeed: 5
+  mouseSensitivity: 0
+  cameraTransform: {fileID: 172681499}
 --- !u!136 &501384365
 CapsuleCollider:
   m_ObjectHideFlags: 0
