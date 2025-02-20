@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -15,6 +16,9 @@ public class Player : MonoBehaviour
 
     public float mouseSensitivity;
     public float xRotation = 0;
+
+   
+
     // Start is called before the first frame update
     void Start()
     {
@@ -34,7 +38,7 @@ public class Player : MonoBehaviour
     {
         var Horizontal=Input.GetAxisRaw("Horizontal");
         var Vertical=Input.GetAxisRaw("Vertical");
-        PlayerRB.velocity = new Vector3(Horizontal * speed , PlayerRB.velocity.y , Vertical * speed);
+        PlayerRB.linearVelocity = new Vector3(Horizontal * speed , PlayerRB.linearVelocity.y , Vertical * speed);
       
     }
     void MouseControl(){
@@ -50,7 +54,7 @@ public class Player : MonoBehaviour
     }
 
 
-    void OnCollisionEnter(Collision other)
+    /*void OnCollisionEnter(Collision other)
     {
         if(other.gameObject.CompareTag("key")){
             keys++;
@@ -62,6 +66,20 @@ public class Player : MonoBehaviour
         }
         else{
             Debug.Log("collect keys first");
+        }
+    }*/
+    void OnCollisionEnter(Collision other)
+    {
+        if (other.gameObject.CompareTag("key"))
+        {
+            
+            string name = other.gameObject.tag;
+            keys++;
+            InventoryManager.instance.AddItemsToInventory(name,1);
+            if (InventoryManager.instance.canCollect == true)
+            {
+                Destroy(other.gameObject);
+            }
         }
     }
 }
