@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -56,6 +57,28 @@ public class Player : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
+
+    public void crosshairInteractables(){
+        RaycastHit hit ;
+        if(Physics.Raycast(cameraTransform.position,cameraTransform.forward,out hit,50f))
+        {
+             if(hit.collider.tag == "Interactable")
+            {
+              //InteractionText--TextMeshProObject variable creation set active true hit.collider.gameobject.name
+            }
+            else
+            {
+                   //InteractionText setactive false
+            }
+        }
+        else{
+            //InteractionText false 
+        }
+
+        }
+
+        
+    
 
     void OnCollisionEnter(Collision other)
     {
