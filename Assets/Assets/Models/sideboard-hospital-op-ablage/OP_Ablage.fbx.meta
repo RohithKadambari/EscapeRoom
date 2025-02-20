@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4d629f16b4632c74f91672ee6ba7855b
+guid: d3b20d01f6a7641499fc7ebacc49a401
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,12 +7,12 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: matress_baked
-    second: {fileID: 2100000, guid: b2b97e8dd4d2f874d9e8373a7ea360bd, type: 2}
+      name: Material #25
+    second: {fileID: 2100000, guid: cf737bde1468ddd44b16b1e62027b397, type: 2}
   materials:
-    materialImportMode: 2
+    materialImportMode: 1
     materialName: 0
-    materialSearch: 1
+    materialSearch: 0
     materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
