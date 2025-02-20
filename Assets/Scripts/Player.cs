@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
     public Transform cameraTransform;
 
     private float xRotation = 0f;
+    
 
     void Start()
     {
