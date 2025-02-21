@@ -82,7 +82,7 @@ public class Player : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Key"))
         {
-            string name = other.gameObject.name;
+            string name = other.gameObject.tag;
             keys++;
            
             InventoryManager.Instance.AddItemsInInventory(name, 1);
