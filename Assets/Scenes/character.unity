@@ -280,8 +280,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.33
-  m_Center: {x: 0.00024982356, y: -0.0011685342, z: 0}
+  m_Radius: 0.09
+  m_Center: {x: 0.0002498307, y: -0.0011685418, z: -0.1603827}
 --- !u!114 &270787784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -827,6 +827,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7391893599991588489, guid: 641fc14712475e84794cce6761ef198c, type: 3}
+      propertyPath: InteractionText
+      value: 
+      objectReference: {fileID: 158425208}
     - target: {fileID: 8962742392074368342, guid: 641fc14712475e84794cce6761ef198c, type: 3}
       propertyPath: m_Name
       value: First Person Player
