@@ -276,24 +276,59 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.09
   m_Center: {x: 0.0002498307, y: -0.0011685418, z: -0.1603827}
---- !u!114 &270787784
+--- !u!1 &346756413
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 346756415}
+  - component: {fileID: 346756414}
+  m_Layer: 0
+  m_Name: InventoryManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &346756414
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 270787779}
+  m_GameObject: {fileID: 346756413}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12ed2a8443416994297883a2343fc9e9, type: 3}
+  m_Script: {fileID: 11500000, guid: 8edd4281996c54b4894db6c20a6fb52c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canCollect: 0
+  inventoryItems: []
+  maxInventoryItems: 1
+--- !u!4 &346756415
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346756413}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.0798892, y: 1.4197067, z: -3.5278766}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &664249445
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -362,6 +397,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Simple_02
       objectReference: {fileID: 0}
+    - target: {fileID: 3019568617730713240, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
+      propertyPath: m_TagString
+      value: Key
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -369,9 +408,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3019568617730713240, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
       insertIndex: -1
       addedObject: {fileID: 270787780}
-    - targetCorrespondingSourceObject: {fileID: 3019568617730713240, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 270787784}
   m_SourcePrefab: {fileID: 100100000, guid: 5dd5a1ab6047d4848b7668734815016f, type: 3}
 --- !u!1 &849161960
 GameObject:
@@ -890,3 +926,4 @@ SceneRoots:
   - {fileID: 1239916348}
   - {fileID: 849161963}
   - {fileID: 664249445}
+  - {fileID: 346756415}
