@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
@@ -7,6 +8,8 @@ public class Player : MonoBehaviour
 {
     int keys = 0;
     private Rigidbody playerRB;
+
+    public TextMeshProUGUI InteractionText;
     
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float mouseSensitivity = 2f;
@@ -18,6 +21,7 @@ public class Player : MonoBehaviour
 
     void Start()
     {
+        InteractionText.gameObject.SetActive(false);
         playerRB = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -66,14 +70,16 @@ public class Player : MonoBehaviour
              if(hit.collider.tag == "Interactable")
             {
               //InteractionText--TextMeshProObject variable creation set active true hit.collider.gameobject.name
+              InteractionText.gameObject.SetActive(true);
             }
             else
             {
-                   //InteractionText setactive false
+                   InteractionText.gameObject.SetActive(false);
             }
         }
         else{
             //InteractionText false 
+            InteractionText.gameObject.SetActive(false) ;
         }
 
         }
