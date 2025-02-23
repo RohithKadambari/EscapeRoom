@@ -85,29 +85,9 @@ public class Player : MonoBehaviour
             string name = other.gameObject.tag;
             keys++;
            
-            InventoryManager.Instance.AddItemsInInventory(name, 1);
+            InventoryManager.instance.AddItemsToInventory(name, 1);
              Destroy(other.gameObject);
             
         }
     }
-
-
-
-
-    /*void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.CompareTag("key"))
-        {
-            keys++;
-            Destroy(other.gameObject);
-            if (keys >= 5)
-            {
-                Debug.Log("All 5 Keys are Collected");
-            }
-        }
-        else
-        {
-            Debug.Log("Collect keys first");
-        }
-    }*/
 }
