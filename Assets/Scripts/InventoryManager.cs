@@ -1,60 +1,53 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    public static InventoryManager instance;
-    public bool canCollect;
-
-    private void Awake()
-    {
-        instance = this;
-    }
-
-    private void Start()
-    {
-        canCollect = true;
-        
-    }
+    public static InventoryManager Instance;
 
     [System.Serializable]
-    public class InventorySystem
+    public class CollectableItem
     {
         public string itemName;
-        
         public int itemQuantity;
 
-       public InventorySystem(string itemName, int itemQuantity)
+        public CollectableItem(string itemName, int itemQuantity)
         {
             this.itemName = itemName;
             this.itemQuantity = itemQuantity;
         }
-        
+
     }
 
-    public List<InventorySystem> inventory = new List<InventorySystem>();
-    [SerializeField] private int maxInventoryCapacity;
+    public bool canCollect;
 
-    public void AddItemsToInventory(string inventoryItemName, int inventoryItemQuantity)
+    private void Awake()
     {
-        var existingItem = inventory.Find(item => item.itemName == inventoryItemName);
+        Instance = this;
+        canCollect = true;
+    }
 
-        if (existingItem != null && canCollect == true)
+    public List<CollectableItem> inventoryItems = new List<CollectableItem>();
+    public int batteryLimit;
+    [SerializeField] int maxInventoryItems;
+    
+    public void AddItemsInInventory(string nameOfInventory, int quantity)
+    {
+        var existingInventoryItem = inventoryItems.Find(item => item.itemName == nameOfInventory);
+
+        if (existingInventoryItem != null)
         {
-            existingItem.itemQuantity = inventoryItemQuantity + existingItem.itemQuantity;
+            existingInventoryItem.itemQuantity += quantity;
         }
-        
-        if (inventory.Count < maxInventoryCapacity && canCollect == true)
-        { 
-            inventory.Add(new InventorySystem(inventoryItemName,inventoryItemQuantity));
+        else if (inventoryItems.Count <= maxInventoryItems && canCollect)
+        {
+            inventoryItems.Add(new CollectableItem(nameOfInventory, quantity));
         }
         else
-        { 
-            canCollect = false;
+        {
             Debug.Log("Inventory is full");
-
+            canCollect = false;
         }
     }
-    
 }
