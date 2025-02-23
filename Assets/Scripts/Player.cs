@@ -1,85 +1,113 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
     int keys = 0;
-    private Rigidbody PlayerRB;
-    [SerializeField] int speed;
-    public Transform playerBody;
+    private Rigidbody playerRB;
 
-    
-    
+    [SerializeField] private float moveSpeed = 5f;
+    [SerializeField] private float mouseSensitivity = 2f;
 
-    public float mouseSensitivity;
-    public float xRotation = 0;
+    public Transform cameraTransform;
 
-   
+    private float xRotation = 0f;
 
-    // Start is called before the first frame update
+
     void Start()
     {
-        PlayerRB = GetComponent<Rigidbody>();
+        playerRB = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    // Update is called once per frame
     void Update()
     {
-        PlayerMovements();
         MouseControl();
-        
     }
 
-    public void PlayerMovements()
+    void FixedUpdate()
     {
-        var Horizontal=Input.GetAxisRaw("Horizontal");
-        var Vertical=Input.GetAxisRaw("Vertical");
-        PlayerRB.linearVelocity = new Vector3(Horizontal * speed , PlayerRB.linearVelocity.y , Vertical * speed);
-      
+        PlayerMovements();
     }
-    void MouseControl(){
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity* Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-         xRotation -=mouseY;
-         xRotation=Mathf.Clamp(xRotation,-90f,90f);
+    void PlayerMovements()
+    {
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
 
-        transform.localRotation = Quaternion.Euler(xRotation,0f,0f);
 
-        playerBody.Rotate(Vector3.up*mouseX);
+        Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
+        moveDirection.Normalize();
+
+
+        playerRB.MovePosition(playerRB.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
     }
+
+    void MouseControl()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity;
+
+
+        transform.Rotate(Vector3.up * mouseX);
+
+
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+    }
+
+    public void crosshairInteractables() {
+        RaycastHit hit;
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 50f))
+        {
+            if (hit.collider.tag == "Interactable")
+            {
+                //InteractionText--TextMeshProObject variable creation set active true hit.collider.gameobject.name
+            }
+            else
+            {
+                //InteractionText setactive false
+            }
+        }
+        else {
+            //InteractionText false 
+        }
+
+    }
+
+    void OnCollisionEnter(Collision other)
+    {
+        if(other.gameObject.CompareTag("Key"))
+        {
+            string name = other.gameObject.tag;
+            keys++;
+           
+            InventoryManager.Instance.AddItemsInInventory(name, 1);
+             Destroy(other.gameObject);
+            
+        }
+    }
+
+
 
 
     /*void OnCollisionEnter(Collision other)
     {
-        if(other.gameObject.CompareTag("key")){
+        if (other.gameObject.CompareTag("key"))
+        {
             keys++;
-            
             Destroy(other.gameObject);
-            if(keys>=5){
+            if (keys >= 5)
+            {
                 Debug.Log("All 5 Keys are Collected");
             }
         }
-        else{
-            Debug.Log("collect keys first");
+        else
+        {
+            Debug.Log("Collect keys first");
         }
     }*/
-    void OnCollisionEnter(Collision other)
-    {
-        if (other.gameObject.CompareTag("key"))
-        {
-            
-            string name = other.gameObject.tag;
-            keys++;
-            InventoryManager.instance.AddItemsToInventory(name,1);
-            if (InventoryManager.instance.canCollect == true)
-            {
-                Destroy(other.gameObject);
-            }
-        }
-    }
 }
