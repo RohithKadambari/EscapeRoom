@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Key
   - Battery
+  - Door
   layers:
   - Default
   - TransparentFX
