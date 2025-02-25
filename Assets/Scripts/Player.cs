@@ -59,7 +59,8 @@ public class Player : MonoBehaviour
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
 
-    public void crosshairInteractables() {
+    public void crosshairInteractables()
+    {
         RaycastHit hit;
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 50f))
         {
@@ -72,7 +73,8 @@ public class Player : MonoBehaviour
                 //InteractionText setactive false
             }
         }
-        else {
+        else
+        {
             //InteractionText false 
         }
 
@@ -80,32 +82,31 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-            if (other.gameObject.CompareTag("Key"))
-            {
+        if (other.gameObject.CompareTag("Key"))
+        {
 
-                string name = other.gameObject.tag;
-                keys++;
+            string name = other.gameObject.tag;
+            keys++;
+            InventoryManager.Instance.AddItemsInInventory(name, 1);
+            Destroy(other.gameObject);
+
+        }
+        if (other.gameObject.CompareTag("Battery"))
+        {
+            string name = other.gameObject.tag;
+            var batteryItem = InventoryManager.Instance.inventoryItems.Find(p => p.itemName == "Battery");
+            if ((batteryItem == null) || (batteryItem.itemQuantity < InventoryManager.Instance.GetMaxCapcityFor(name)))
+            {
+                Debug.Log("Enter the dragon");
                 InventoryManager.Instance.AddItemsInInventory(name, 1);
-                if (InventoryManager.Instance.canCollect == true)
-
-                    InventoryManager.Instance.AddItemsInInventory(name, 1);
-                Destroy(other.gameObject);
 
             }
-            if (other.gameObject.CompareTag("Battery"))
+            else
             {
-                string name = other.gameObject.tag;
-                if (InventoryManager.Instance.inventoryItems.Count < InventoryManager.Instance.batteryLimit)
-                {
-                    InventoryManager.Instance.AddItemsInInventory(name,1);
-                    
-                }
-                else
-                {
-                    Debug.Log("Battery max capacity is reached ");
-                }
+                Debug.Log("Battery max capacity is reached ");
             }
+        }
     }
 
-    }
+}
 
