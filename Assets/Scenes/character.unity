@@ -308,12 +308,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 346756413}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8edd4281996c54b4894db6c20a6fb52c, type: 3}
+  m_Script: {fileID: 11500000, guid: 658a63ac2c65c55469e7217905593f5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   canCollect: 0
   inventoryItems: []
-  maxInventoryItems: 1
+  batteryLimit: 0
+  maxInventoryItems: 0
 --- !u!4 &346756415
 Transform:
   m_ObjectHideFlags: 0
