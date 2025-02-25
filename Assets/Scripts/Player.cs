@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -8,28 +9,42 @@ public class Player : MonoBehaviour
     int keys = 0;
     private Rigidbody playerRB;
 
+
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float mouseSensitivity = 2f;
+
+
 
     public Transform cameraTransform;
 
     private float xRotation = 0f;
+
+    public float bounceFrequency = 2f;
+
+    public float bounceAmplitude = 0.1f;
+
+    Vector3 OriginalPos;
+
+
 
 
     void Start()
     {
         playerRB = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
+        OriginalPos = cameraTransform.localPosition;
     }
 
     void Update()
     {
         MouseControl();
+
     }
 
     void FixedUpdate()
     {
         PlayerMovements();
+
     }
 
     void PlayerMovements()
@@ -40,9 +55,16 @@ public class Player : MonoBehaviour
 
         Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
         moveDirection.Normalize();
+        moveDirection.y = 0;
 
 
         playerRB.MovePosition(playerRB.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
+        if (moveDirection.magnitude >= 0.1f)
+        {
+            Debug.Log("Entering");
+            Walkbounce();
+        }
+
     }
 
     void MouseControl()
@@ -57,6 +79,11 @@ public class Player : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+    }
+    public void Walkbounce()
+    {
+        float bounce = Mathf.Sin(Time.time * bounceFrequency) * bounceAmplitude;
+        cameraTransform.localPosition = OriginalPos + (Vector3.up * bounce);
     }
 
     public void crosshairInteractables()

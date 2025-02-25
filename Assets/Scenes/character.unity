@@ -122,6 +122,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &76734113 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6611845292638893865, guid: 641fc14712475e84794cce6761ef198c, type: 3}
+  m_PrefabInstance: {fileID: 3582725875180380142}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &158425206
 GameObject:
   m_ObjectHideFlags: 0
@@ -355,7 +360,7 @@ Transform:
   m_GameObject: {fileID: 164407978}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.7431607, y: 0.96, z: 1.54}
+  m_LocalPosition: {x: -0.7431607, y: 0.96, z: -10.69}
   m_LocalScale: {x: 0.4626, y: 0.4626, z: 0.4626}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -689,7 +694,7 @@ Transform:
   m_GameObject: {fileID: 1096187223}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.54, y: 0.96, z: -0.58}
+  m_LocalPosition: {x: -15, y: 0.8, z: -11.68}
   m_LocalScale: {x: 0.4626, y: 0.4626, z: 0.4626}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1002,7 +1007,7 @@ Transform:
   m_GameObject: {fileID: 1319616301}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.24, y: 0.96, z: 3.16}
+  m_LocalPosition: {x: -2.24, y: 0.96, z: -13.23}
   m_LocalScale: {x: 0.4626, y: 0.4626, z: 0.4626}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1202,8 +1207,8 @@ Transform:
   m_GameObject: {fileID: 1615017552}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -11.1221, y: 0, z: -13.1228}
+  m_LocalScale: {x: 3.2244, y: 1, z: 3.6246}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1291,10 +1296,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6103701512572330654, guid: 641fc14712475e84794cce6761ef198c, type: 3}
+      propertyPath: m_Constraints
+      value: 112
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391893599991588489, guid: 641fc14712475e84794cce6761ef198c, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 76734113}
+    - target: {fileID: 7391893599991588489, guid: 641fc14712475e84794cce6761ef198c, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7391893599991588489, guid: 641fc14712475e84794cce6761ef198c, type: 3}
       propertyPath: InteractionText
       value: 
       objectReference: {fileID: 158425208}
+    - target: {fileID: 7391893599991588489, guid: 641fc14712475e84794cce6761ef198c, type: 3}
+      propertyPath: bounceAmplitude
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7391893599991588489, guid: 641fc14712475e84794cce6761ef198c, type: 3}
+      propertyPath: bounceFrequency
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 8962742392074368342, guid: 641fc14712475e84794cce6761ef198c, type: 3}
       propertyPath: m_Name
       value: First Person Player
