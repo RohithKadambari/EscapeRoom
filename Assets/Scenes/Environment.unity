@@ -17809,9 +17809,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3047021}
     m_Modifications:
+    - target: {fileID: 750231957080911078, guid: 15b0b21e50a78334f8a52bcb8b2d2db0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4671938555044196735, guid: 15b0b21e50a78334f8a52bcb8b2d2db0, type: 3}
       propertyPath: m_Name
       value: door
+      objectReference: {fileID: 0}
+    - target: {fileID: 5416307516470411630, guid: 15b0b21e50a78334f8a52bcb8b2d2db0, type: 3}
+      propertyPath: m_Size.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6648185946291773883, guid: 15b0b21e50a78334f8a52bcb8b2d2db0, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6648185946291773883, guid: 15b0b21e50a78334f8a52bcb8b2d2db0, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6648185946291773883, guid: 15b0b21e50a78334f8a52bcb8b2d2db0, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 6801540243502055968, guid: 15b0b21e50a78334f8a52bcb8b2d2db0, type: 3}
       propertyPath: m_LocalPosition.x
