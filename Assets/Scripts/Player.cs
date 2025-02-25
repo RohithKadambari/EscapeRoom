@@ -58,7 +58,7 @@ public class Player : MonoBehaviour
         moveDirection.y = 0;
 
 
-        playerRB.MovePosition(playerRB.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
+        playerRB.velocity = moveDirection * moveSpeed;
         if (moveDirection.magnitude >= 0.1f)
         {
             Debug.Log("Entering");
