@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
 
     public Transform cameraTransform;
 
+    [SerializeField] GameObject Door;
+    bool DoorClosed;
+
     private float xRotation = 0f;
 
     public float bounceFrequency = 2f;
@@ -131,6 +134,25 @@ public class Player : MonoBehaviour
             else
             {
                 Debug.Log("Battery max capacity is reached ");
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Door"))
+        {
+
+            if (Input.GetKey(KeyCode.E) && DoorClosed)
+            {
+                Debug.Log("player");
+                Door.GetComponent<Animation>().Play("DoorOpening");
+                DoorClosed = false;
+            }
+            else if (Input.GetKey(KeyCode.E) && !DoorClosed)
+            {
+                Door.GetComponent<Animation>().Play("DoorClosing");
+                DoorClosed = true;
             }
         }
     }
