@@ -28,6 +28,8 @@ public class Player : MonoBehaviour
 
     Vector3 OriginalPos;
 
+    private Stamina stamina;
+
 
 
 
@@ -36,6 +38,8 @@ public class Player : MonoBehaviour
         playerRB = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         OriginalPos = cameraTransform.localPosition;
+        stamina = GetComponent<Stamina>();
+
     }
 
     void Update()
