@@ -28,17 +28,20 @@ public class Player : MonoBehaviour
 
     Vector3 OriginalPos;
 
-    private Stamina stamina;
+
+
+    bool CanyouStand;
 
 
 
 
     void Start()
     {
+        CanyouStand = true;
         playerRB = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         OriginalPos = cameraTransform.localPosition;
-        stamina = GetComponent<Stamina>();
+        Stamina.Instance = GetComponent<Stamina>();
 
     }
 
@@ -56,20 +59,30 @@ public class Player : MonoBehaviour
 
     void PlayerMovements()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-
-
-        Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
-        moveDirection.Normalize();
-        moveDirection.y = 0;
-
-
-        playerRB.velocity = moveDirection * moveSpeed;
-        if (moveDirection.magnitude >= 0.1f)
+        if (CanyouStand)
         {
-            Debug.Log("Entering");
-            Walkbounce();
+            Stamina.Instance.StaminaDrain();
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+
+
+
+            Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
+            moveDirection.Normalize();
+            moveDirection.y = 0;
+
+
+            playerRB.velocity = moveDirection * moveSpeed;
+            if (moveDirection.magnitude >= 0.1f)
+            {
+                Debug.Log("Entering");
+                Walkbounce();
+            }
+
+        }
+        else
+        {
+            CanyouStand = false;
         }
 
     }
