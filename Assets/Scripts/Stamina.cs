@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class Stamina : MonoBehaviour
 {
@@ -11,11 +14,16 @@ public class Stamina : MonoBehaviour
 
     KeyCode sprintkey = KeyCode.LeftShift;
 
+    public Image Staminabar;
+
     bool isSprinting;
+
+    bool Regenerating;
     // Start is called before the first frame update
     void Start()
     {
         currentStamina = maxStamina;
+        Staminabar.fillAmount = currentStamina / maxStamina;
     }
 
     // Update is called once per frame
@@ -25,6 +33,7 @@ public class Stamina : MonoBehaviour
         {
             isSprinting = true;
             currentStamina -= sprintDrain;
+            Staminabar.fillAmount = currentStamina / maxStamina;
             if (currentStamina < 0)
             {
                 currentStamina = 0;
@@ -32,13 +41,29 @@ public class Stamina : MonoBehaviour
             else
             {
                 isSprinting = false;
-                currentStamina += StaminaRechargeRate;
+
+
             }
-            if (currentStamina > maxStamina)
+            if (!isSprinting && currentStamina < maxStamina)
             {
-                currentStamina = maxStamina;
+                StaminaRegenerate();
             }
 
         }
+    }
+    public void StaminaRegenerate()
+    {
+        Regenerating = true;
+        if (currentStamina < maxStamina)
+        {
+            currentStamina += StaminaRechargeRate;
+            if (currentStamina > maxStamina) currentStamina = maxStamina;
+            Staminabar.fillAmount = currentStamina / maxStamina;
+        }
+        else
+        {
+            Regenerating = false;
+        }
+
     }
 }
