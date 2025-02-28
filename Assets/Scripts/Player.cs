@@ -60,26 +60,21 @@ public class Player : MonoBehaviour
     {
         if (CanyouStand)
         {
-            if (Stamina.Instance !=null)
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+
+
+
+            Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
+            moveDirection.Normalize();
+            moveDirection.y = 0;
+
+
+            playerRB.velocity = moveDirection * moveSpeed;
+            if (moveDirection.magnitude >= 0.1f)
             {
-                
-                Stamina.Instance.StaminaDrain();
-                float horizontal = Input.GetAxis("Horizontal");
-                float vertical = Input.GetAxis("Vertical");
-
-
-
-                Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
-                moveDirection.Normalize();
-                moveDirection.y = 0;
-
-
-                 playerRB.linearVelocity = moveDirection * moveSpeed;
-                if (moveDirection.magnitude >= 0.1f)
-                {
-                    Debug.Log("Entering");
-                    Walkbounce();
-                } 
+                Debug.Log("Entering");
+                Walkbounce();
             }
 
         }
