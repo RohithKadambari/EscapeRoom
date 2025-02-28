@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -21,10 +22,24 @@ public class Stamina : MonoBehaviour
     bool Regenerating;
 
     public static Stamina Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        Instance = this;
+      
         currentStamina = maxStamina;
         Staminabar.fillAmount = currentStamina / maxStamina;
     }

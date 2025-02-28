@@ -41,7 +41,6 @@ public class Player : MonoBehaviour
         playerRB = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         OriginalPos = cameraTransform.localPosition;
-        Stamina.Instance = GetComponent<Stamina>();
 
     }
 
@@ -61,22 +60,26 @@ public class Player : MonoBehaviour
     {
         if (CanyouStand)
         {
-            Stamina.Instance.StaminaDrain();
-            float horizontal = Input.GetAxis("Horizontal");
-            float vertical = Input.GetAxis("Vertical");
-
-
-
-            Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
-            moveDirection.Normalize();
-            moveDirection.y = 0;
-
-
-            playerRB.velocity = moveDirection * moveSpeed;
-            if (moveDirection.magnitude >= 0.1f)
+            if (Stamina.Instance !=null)
             {
-                Debug.Log("Entering");
-                Walkbounce();
+                
+                Stamina.Instance.StaminaDrain();
+                float horizontal = Input.GetAxis("Horizontal");
+                float vertical = Input.GetAxis("Vertical");
+
+
+
+                Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
+                moveDirection.Normalize();
+                moveDirection.y = 0;
+
+
+                 playerRB.linearVelocity = moveDirection * moveSpeed;
+                if (moveDirection.magnitude >= 0.1f)
+                {
+                    Debug.Log("Entering");
+                    Walkbounce();
+                } 
             }
 
         }
@@ -157,19 +160,22 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Door"))
+        if (other.gameObject != null)
         {
+            if (other.gameObject.CompareTag("Door"))
+            {
 
-            if (Input.GetKey(KeyCode.E) && DoorClosed)
-            {
-                Debug.Log("player");
-                Door.GetComponent<Animation>().Play("DoorOpening");
-                DoorClosed = false;
-            }
-            else if (Input.GetKey(KeyCode.E) && !DoorClosed)
-            {
-                Door.GetComponent<Animation>().Play("DoorClosing");
-                DoorClosed = true;
+                if (Input.GetKey(KeyCode.E) && DoorClosed)
+                {
+                    Debug.Log("player");
+                    Door.GetComponent<Animation>().Play("DoorOpening");
+                    DoorClosed = false;
+                }
+                else if (Input.GetKey(KeyCode.E) && !DoorClosed)
+                {
+                    Door.GetComponent<Animation>().Play("DoorClosing");
+                    DoorClosed = true;
+                }
             }
         }
     }
