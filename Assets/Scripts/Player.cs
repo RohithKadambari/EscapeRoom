@@ -142,8 +142,9 @@ public class Player : MonoBehaviour
             var batteryItem = InventoryManager.Instance.inventoryItems.Find(p => p.itemName == "Battery");
             if ((batteryItem == null) || (batteryItem.itemQuantity < InventoryManager.Instance.GetMaxCapcityFor(name)))
             {
-                Debug.Log("Enter the dragon");
+                Debug.Log("Got the battery");
                 InventoryManager.Instance.AddItemsInInventory(name, 1);
+                
 
             }
             else
