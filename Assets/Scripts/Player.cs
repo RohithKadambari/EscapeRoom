@@ -28,7 +28,9 @@ public class Player : MonoBehaviour
 
     Vector3 OriginalPos;
 
+    float SphereRadius = 10f;
 
+    [SerializeField] LayerMask collectableLayer;
 
     bool CanyouStand;
 
@@ -107,15 +109,15 @@ public class Player : MonoBehaviour
     public void crosshairInteractables()
     {
         RaycastHit hit;
-        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 50f))
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 1000f))
         {
             if (hit.collider.tag == "Interactable")
             {
-                //InteractionText--TextMeshProObject variable creation set active true hit.collider.gameobject.name
+                Debug.Log("raycasting" + hit.collider.gameObject.name);
             }
             else
             {
-                //InteractionText setactive false
+
             }
         }
         else
@@ -123,6 +125,19 @@ public class Player : MonoBehaviour
             //InteractionText false 
         }
 
+    }
+    public void PlayerCasting()
+    {
+        RaycastHit hit;
+        if (Physics.SphereCast(transform.position, SphereRadius, transform.forward, out hit, 100f, collectableLayer))
+        {
+            Debug.Log("Sherecast hit:" + hit.collider.name);
+        }
+    }
+    void OnDrawGizmos()
+    {
+
+        Gizmos.DrawRay(cameraTransform.position, Vector3.forward * 100f);
     }
 
     void OnCollisionEnter(Collision other)
@@ -144,7 +159,7 @@ public class Player : MonoBehaviour
             {
                 Debug.Log("Got the battery");
                 InventoryManager.Instance.AddItemsInInventory(name, 1);
-                
+
 
             }
             else
