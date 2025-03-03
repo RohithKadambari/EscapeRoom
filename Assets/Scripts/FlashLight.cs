@@ -26,7 +26,6 @@ public class FlashLight : MonoBehaviour
         batteryCapacity = 100;
         midpointBatteryDrain = 50f;
         lowestCapacitry = 20f;
-        batteryDrain = 2f;
         lightComponent = flashlight.GetComponent<Light>();
         lightComponent.enabled = false;
         lightComponent.intensity = 3f;
@@ -57,6 +56,8 @@ public class FlashLight : MonoBehaviour
         offLight = false;
         canDrain = false;
     }
+    
+    
 
     void FlashlightEnergyDrain()
     {
@@ -65,15 +66,21 @@ public class FlashLight : MonoBehaviour
             batteryCapacity -= batteryDrain * Time.deltaTime;
             batterySlider.value = 1f -(batteryCapacity/100f);
 
-        if (batterySlider.value >= midpointBatteryDrain/100f)
+        if (batteryCapacity<50 && batteryCapacity>=10)
         { 
             lightComponent.intensity = 2.5f;
         }
-        else
+        else if(batteryCapacity>=50)
         {
             lightComponent.intensity = 3f;
         }
+        else if (batteryCapacity < 10 && !isBlinking)
+        {
+            
+            isBlinking = true;
+            StartCoroutine(BlinkingFlashlight());
 
+        }
         /*
         if (batterySlider.value < lowestCapacitry/100f && !isBlinking)
         {
@@ -90,6 +97,8 @@ public class FlashLight : MonoBehaviour
         if (batteryCapacity <= 0)
         {
             FlashlightOff();
+            isBlinking = false;
+            lightComponent.enabled = false;
         }
         
         }
@@ -98,17 +107,13 @@ public class FlashLight : MonoBehaviour
 
     IEnumerator BlinkingFlashlight()
     {
-        isBlinking = true;
-        while (batterySlider.value <= lowestCapacitry/100f && batteryCapacity > 0f)
+        while (isBlinking)
         {
+            Debug.Log("Entering here...");
             lightComponent.enabled = false;
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.12f);
             lightComponent.enabled = true;
-            yield return new WaitForSeconds(0.1f);
-        
+            yield return new WaitForSeconds(0.12f);
         }
-
-        isBlinking = false;
-
     }
 }
