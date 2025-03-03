@@ -72,14 +72,12 @@ public class FlashLight : MonoBehaviour
         }
     }
     
-    // Check if player has batteries in inventory
     bool HasBatteryInInventory()
     {
         var batteryItem = InventoryManager.Instance.inventoryItems.Find(item => item.itemName == "Battery");
         return batteryItem != null && batteryItem.itemQuantity > 0;
     }
     
-    // Consume a battery from inventory and reset flashlight charge
     void ConsumeBatteryFromInventory()
     {
         if (HasBatteryInInventory())
@@ -94,10 +92,8 @@ public class FlashLight : MonoBehaviour
 
             batteryCapacity = 100;
 
-            // Update the UI slider to full (battery is full)
             batterySlider.value = 1f;
 
-            // Log the remaining battery count
             if (HasBatteryInInventory())
             {
                 var remainingBatteryItem = InventoryManager.Instance.inventoryItems.Find(item => item.itemName == "Battery");
