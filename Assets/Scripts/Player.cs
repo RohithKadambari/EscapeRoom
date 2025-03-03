@@ -153,13 +153,14 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Battery"))
         {
+           
             string name = other.gameObject.tag;
             var batteryItem = InventoryManager.Instance.inventoryItems.Find(p => p.itemName == "Battery");
             if ((batteryItem == null) || (batteryItem.itemQuantity < InventoryManager.Instance.GetMaxCapcityFor(name)))
             {
                 Debug.Log("Got the battery");
                 InventoryManager.Instance.AddItemsInInventory(name, 1);
-
+                Destroy(other.gameObject);
 
             }
             else

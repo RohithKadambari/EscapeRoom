@@ -49,6 +49,12 @@ public class InventoryManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        if (levelWiseDatas.Count == 0)
+        {
+            levelWiseDatas.Add(new LevelWiseData { maxInventoryItems = 10 });
+            Debug.LogWarning("No level data found. Added default level data with max 10 inventory items.");
+        }
     
     }
 
@@ -60,10 +66,31 @@ public class InventoryManager : MonoBehaviour
     void Start()
     {
         currentLevel = PlayerPrefs.GetInt("currentLevel",0);
+        // Either initialize to 0:
+        currentLevel = 0;
+
+        // Or ensure the value from PlayerPrefs is valid:
+        currentLevel = PlayerPrefs.GetInt("currentLevel", 0);
+
+        // Make sure currentLevel is within range
+        if (currentLevel >= levelWiseDatas.Count)
+        {
+            currentLevel = 0;
+            Debug.LogWarning("CurrentLevel was out of range, reset to 0");
+        }
     }
+    
 
     public void AddItemsInInventory(string nameOfInventory, int quantity)
     {
+        // First check if currentLevel is valid
+        if (currentLevel < 0 || currentLevel >= levelWiseDatas.Count)
+        {
+            Debug.LogError(
+                $"Current level {currentLevel} is out of range. LevelWiseDatas count: {levelWiseDatas.Count}");
+            return;
+        }
+
         var existingInventoryItem = inventoryItems.Find(item => item.itemName == nameOfInventory);
 
         if (existingInventoryItem != null)
@@ -77,7 +104,6 @@ public class InventoryManager : MonoBehaviour
         else
         {
             Debug.Log("Inventory is full");
-            
         }
     }
 
