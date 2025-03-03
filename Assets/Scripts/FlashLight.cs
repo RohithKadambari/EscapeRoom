@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Slider = UnityEngine.UI.Slider;
 
 public class FlashLight : MonoBehaviour
@@ -9,7 +10,7 @@ public class FlashLight : MonoBehaviour
     public float midpointBatteryDrain;
     public float batteryCapacity;
     public float batteryDrain;
-    public float lowestCapacitry;
+    [FormerlySerializedAs("lowestCapacitry")] public float lowestCapacity;
     public Slider batterySlider;
     private Light lightComponent;
     private bool offLight;
@@ -24,8 +25,6 @@ public class FlashLight : MonoBehaviour
         canDrain = true;
         isBlinking = false;
         batteryCapacity = 100;
-        midpointBatteryDrain = 50f;
-        lowestCapacitry = 20f;
         lightComponent = flashlight.GetComponent<Light>();
         lightComponent.enabled = false;
         lightComponent.intensity = 3f;
@@ -66,7 +65,7 @@ public class FlashLight : MonoBehaviour
             batteryCapacity -= batteryDrain * Time.deltaTime;
             batterySlider.value = 1f -(batteryCapacity/100f);
 
-        if (batteryCapacity<50 && batteryCapacity>=10)
+        if (batteryCapacity<midpointBatteryDrain && batteryCapacity>=lowestCapacity)
         { 
             lightComponent.intensity = 2.5f;
         }
@@ -74,31 +73,18 @@ public class FlashLight : MonoBehaviour
         {
             lightComponent.intensity = 3f;
         }
-        else if (batteryCapacity < 10 && !isBlinking)
+        else if (batteryCapacity < lowestCapacity && !isBlinking)
         {
             
             isBlinking = true;
             StartCoroutine(BlinkingFlashlight());
 
         }
-        /*
-        if (batterySlider.value < lowestCapacitry/100f && !isBlinking)
-        {
-            StartCoroutine(BlinkingFlashlight());
-        }
-        else if (batterySlider.value > lowestCapacitry/100f && isBlinking)
-        {
-            StopCoroutine(BlinkingFlashlight());
-            lightComponent.enabled = true;
-            isBlinking = false;
-        }
-        */
-
+        
         if (batteryCapacity <= 0)
         {
-            FlashlightOff();
             isBlinking = false;
-            lightComponent.enabled = false;
+            FlashlightOff();
         }
         
         }
@@ -114,6 +100,8 @@ public class FlashLight : MonoBehaviour
             yield return new WaitForSeconds(0.12f);
             lightComponent.enabled = true;
             yield return new WaitForSeconds(0.12f);
+            lightComponent.enabled = false;
+
         }
     }
 }
