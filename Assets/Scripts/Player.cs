@@ -28,14 +28,22 @@ public class Player : MonoBehaviour
 
     Vector3 OriginalPos;
 
+    float SphereRadius = 10f;
+
+    [SerializeField] LayerMask collectableLayer;
+
+    bool CanyouStand;
+
 
 
 
     void Start()
     {
+        CanyouStand = true;
         playerRB = GetComponent<Rigidbody>();
         Cursor.lockState = CursorLockMode.Locked;
         OriginalPos = cameraTransform.localPosition;
+
     }
 
     void Update()
@@ -52,20 +60,29 @@ public class Player : MonoBehaviour
 
     void PlayerMovements()
     {
-        float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical");
-
-
-        Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
-        moveDirection.Normalize();
-        moveDirection.y = 0;
-
-
-        playerRB.velocity = moveDirection * moveSpeed;
-        if (moveDirection.magnitude >= 0.1f)
+        if (CanyouStand)
         {
-            Debug.Log("Entering");
-            Walkbounce();
+            float horizontal = Input.GetAxis("Horizontal");
+            float vertical = Input.GetAxis("Vertical");
+
+
+
+            Vector3 moveDirection = transform.forward * vertical + transform.right * horizontal;
+            moveDirection.Normalize();
+            moveDirection.y = 0;
+
+
+            playerRB.velocity = moveDirection * moveSpeed;
+            if (moveDirection.magnitude >= 0.1f)
+            {
+                Debug.Log("Entering");
+                Walkbounce();
+            }
+
+        }
+        else
+        {
+            CanyouStand = false;
         }
 
     }
@@ -92,15 +109,15 @@ public class Player : MonoBehaviour
     public void crosshairInteractables()
     {
         RaycastHit hit;
-        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 50f))
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 1000f))
         {
             if (hit.collider.tag == "Interactable")
             {
-                //InteractionText--TextMeshProObject variable creation set active true hit.collider.gameobject.name
+                Debug.Log("raycasting" + hit.collider.gameObject.name);
             }
             else
             {
-                //InteractionText setactive false
+
             }
         }
         else
@@ -108,6 +125,19 @@ public class Player : MonoBehaviour
             //InteractionText false 
         }
 
+    }
+    public void PlayerCasting()
+    {
+        RaycastHit hit;
+        if (Physics.SphereCast(transform.position, SphereRadius, transform.forward, out hit, 100f, collectableLayer))
+        {
+            Debug.Log("Sherecast hit:" + hit.collider.name);
+        }
+    }
+    void OnDrawGizmos()
+    {
+
+        Gizmos.DrawRay(cameraTransform.position, Vector3.forward * 100f);
     }
 
     void OnCollisionEnter(Collision other)
@@ -123,12 +153,14 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Battery"))
         {
+           
             string name = other.gameObject.tag;
             var batteryItem = InventoryManager.Instance.inventoryItems.Find(p => p.itemName == "Battery");
             if ((batteryItem == null) || (batteryItem.itemQuantity < InventoryManager.Instance.GetMaxCapcityFor(name)))
             {
-                Debug.Log("Enter the dragon");
+                Debug.Log("Got the battery");
                 InventoryManager.Instance.AddItemsInInventory(name, 1);
+                Destroy(other.gameObject);
 
             }
             else
@@ -140,19 +172,22 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Door"))
+        if (other.gameObject != null)
         {
+            if (other.gameObject.CompareTag("Door"))
+            {
 
-            if (Input.GetKey(KeyCode.E) && DoorClosed)
-            {
-                Debug.Log("player");
-                Door.GetComponent<Animation>().Play("DoorOpening");
-                DoorClosed = false;
-            }
-            else if (Input.GetKey(KeyCode.E) && !DoorClosed)
-            {
-                Door.GetComponent<Animation>().Play("DoorClosing");
-                DoorClosed = true;
+                if (Input.GetKey(KeyCode.E) && DoorClosed)
+                {
+                    Debug.Log("player");
+                    Door.GetComponent<Animation>().Play("DoorOpening");
+                    DoorClosed = false;
+                }
+                else if (Input.GetKey(KeyCode.E) && !DoorClosed)
+                {
+                    Door.GetComponent<Animation>().Play("DoorClosing");
+                    DoorClosed = true;
+                }
             }
         }
     }
