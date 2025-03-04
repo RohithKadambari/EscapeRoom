@@ -8607,7 +8607,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5139386863869387635, guid: 641fc14712475e84794cce6761ef198c, type: 3}
       propertyPath: batteryDrain
-      value: 1
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5548430931890813866, guid: 641fc14712475e84794cce6761ef198c, type: 3}
       propertyPath: m_AnchorMax.x
@@ -14245,9 +14245,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelWiseDatas: []
   maxItems: []
-  inventoryItems:
-  - itemName: Battery
-    itemQuantity: 1
+  inventoryItems: []
   currentLevel: 0
 --- !u!4 &1726881666
 Transform:

@@ -109,9 +109,9 @@ public class Player : MonoBehaviour
     public void crosshairInteractables()
     {
         RaycastHit hit;
-        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 1000f))
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 1000f, collectableLayer))
         {
-            if (hit.collider.tag == "Interactable")
+            if (hit.collider.tag == "Key")
             {
                 Debug.Log("raycasting" + hit.collider.gameObject.name);
             }
@@ -153,7 +153,7 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.CompareTag("Battery"))
         {
-           
+
             string name = other.gameObject.tag;
             var batteryItem = InventoryManager.Instance.inventoryItems.Find(p => p.itemName == "Battery");
             if ((batteryItem == null) || (batteryItem.itemQuantity < InventoryManager.Instance.GetMaxCapcityFor(name)))
