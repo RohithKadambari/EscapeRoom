@@ -14,16 +14,7 @@ public class DoorController : MonoBehaviour
         doorAnimator = GetComponent<Animator>();
     }
 
-    void Update()
-    {
-        // Check for the user input to toggle the door
-        if (Input.GetKeyDown(toggleKey))
-        {
-            ToggleDoor();
-        }
-    }
-
-    void ToggleDoor()
+    public void ToggleDoor()
     {
         // Toggle the door state and update the animation
         isOpen = !isOpen;
@@ -39,4 +30,5 @@ public class DoorController : MonoBehaviour
             doorAnimator.SetTrigger("Close");
         }
     }
+
 }

@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2256407667705422809
 Transform:
   m_ObjectHideFlags: 0
@@ -387,9 +387,10 @@ GameObject:
   - component: {fileID: 6801540243502055968}
   - component: {fileID: 5416307516470411630}
   - component: {fileID: 629133945703863560}
+  - component: {fileID: 8941537711550011474}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Untagged
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -402,7 +403,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4671938555044196735}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 9.974, y: -2.42, z: -7.5039997}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -433,7 +434,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 2.53, z: 2.25}
+  m_Size: {x: 2.5, y: 2.53, z: 2.25}
   m_Center: {x: 0, y: 1.12, z: 0}
 --- !u!95 &629133945703863560
 Animator:
@@ -456,6 +457,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8941537711550011474
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4671938555044196735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea70e1ffb21ea8f4ea34beaabbcc84a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  toggleKey: 101
 --- !u!1 &7364902302540915091
 GameObject:
   m_ObjectHideFlags: 0
