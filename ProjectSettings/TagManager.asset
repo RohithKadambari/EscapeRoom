@@ -7,11 +7,12 @@ TagManager:
   - Key
   - Battery
   - Door
+  - Interactable
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - collectableLayer
   - Water
   - UI
   - 
