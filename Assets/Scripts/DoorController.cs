@@ -4,16 +4,18 @@ public class DoorController : MonoBehaviour
 {
     public static DoorController instance;
 
-    private void Awake()
-    {
-        instance = this; 
-    }
+    
 
     private Animator doorAnimator; // Animator for the door
     private bool isOpen = false; // To track if the door is open or closed
 
     // You can modify this based on your input method (e.g., keyboard, mouse, or triggers)
     public KeyCode toggleKey = KeyCode.E; // Default key to toggle door state
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {

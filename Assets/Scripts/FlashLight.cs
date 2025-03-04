@@ -16,8 +16,8 @@ public class FlashLight : MonoBehaviour
     private bool canDrain;
     private bool isBlinking;
     private Coroutine blinkCoroutine;
-    
-    
+
+
 
     private void Start()
     {
@@ -33,7 +33,7 @@ public class FlashLight : MonoBehaviour
     private void Update()
     {
         FlashlightEnergyDrain();
-        
+
         if (Input.GetKeyDown(KeyCode.F))
         {
             if (!offLight && HasBatteryInInventory())
@@ -63,7 +63,7 @@ public class FlashLight : MonoBehaviour
         lightComponent.enabled = false;
         offLight = false;
         canDrain = false;
-        
+
         // If we're blinking, stop the coroutine
         if (isBlinking && blinkCoroutine != null)
         {
@@ -71,13 +71,13 @@ public class FlashLight : MonoBehaviour
             isBlinking = false;
         }
     }
-    
+
     bool HasBatteryInInventory()
     {
         var batteryItem = InventoryManager.Instance.inventoryItems.Find(item => item.itemName == "Battery");
         return batteryItem != null && batteryItem.itemQuantity > 0;
     }
-    
+
     void ConsumeBatteryFromInventory()
     {
         if (HasBatteryInInventory())
@@ -115,8 +115,8 @@ public class FlashLight : MonoBehaviour
     {
         if (offLight && canDrain)
         {
-            batteryCapacity -= batteryDrain * Time.deltaTime; 
-            batterySlider.value = 1f - (batteryCapacity / 100f); 
+            batteryCapacity -= batteryDrain * Time.deltaTime;
+            batterySlider.value = 1f - (batteryCapacity / 100f);
 
             if (batteryCapacity < midpointBatteryDrain && batteryCapacity >= lowestCapacity)
             {
@@ -134,21 +134,18 @@ public class FlashLight : MonoBehaviour
 
             if (batteryCapacity <= 0)
             {
-                batteryCapacity = 0; 
+                batteryCapacity = 0;
                 isBlinking = false;
-                if (blinkCoroutine != null)
-                {
-                    StopCoroutine(blinkCoroutine);
-                }
+                StopCoroutine(BlinkingFlashlight());
 
-                FlashlightOff(); 
+                FlashlightOff();
 
                 if (HasBatteryInInventory())
                 {
-                    ConsumeBatteryFromInventory(); 
+                    ConsumeBatteryFromInventory();
                     if (batteryCapacity > 0)
                     {
-                        FlashlightOn(); 
+                        FlashlightOn();
                     }
                 }
                 else
@@ -170,7 +167,7 @@ public class FlashLight : MonoBehaviour
             lightComponent.enabled = true;
             yield return new WaitForSeconds(0.12f);
         }
-        
+
         if (offLight && batteryCapacity > 0)
         {
             lightComponent.enabled = true;
