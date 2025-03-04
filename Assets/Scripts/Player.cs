@@ -9,6 +9,8 @@ public class Player : MonoBehaviour
     int keys = 0;
     private Rigidbody playerRB;
 
+    bool door = false;
+
 
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float mouseSensitivity = 2f;
@@ -49,6 +51,17 @@ public class Player : MonoBehaviour
     void Update()
     {
         MouseControl();
+
+
+        if (door)
+        {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                DoorController.instance.ToggleDoor();
+                
+            }
+        }
+        
 
     }
 
@@ -189,6 +202,18 @@ public class Player : MonoBehaviour
                     DoorClosed = true;
                 }
             }
+        }
+
+        if (other.gameObject.CompareTag("Door"))
+        {
+            door = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.CompareTag("Door"))
+        {
+            door = false;
         }
     }
 

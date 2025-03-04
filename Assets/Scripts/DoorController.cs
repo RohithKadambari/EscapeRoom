@@ -2,6 +2,13 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
+    public static DoorController instance;
+
+    private void Awake()
+    {
+        instance = this; 
+    }
+
     private Animator doorAnimator; // Animator for the door
     private bool isOpen = false; // To track if the door is open or closed
 
