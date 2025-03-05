@@ -1,3 +1,5 @@
+using System.Linq;
+using System.Reflection;
 using UnityEngine;
 
 public class DoorController : MonoBehaviour
@@ -37,6 +39,36 @@ public class DoorController : MonoBehaviour
         {
             // Play the door closing animation (you can change "Close" to your actual animation name)
             doorAnimator.SetTrigger("Close");
+        }
+    }
+
+    public void DoorOpenWithKeys()
+    {
+        if (InventoryManager.Instance == null)
+        {
+            Debug.LogError("No inventory manageer found in the scene");
+            return;
+        }
+        else
+        {
+            bool hasKey = InventoryManager.Instance.inventoryItems.Any(item => item.itemName.Contains("Key") && item.itemQuantity > 0);
+
+            if (hasKey)
+            {
+                ToggleDoor();
+
+                var KeyChecking = InventoryManager.Instance.inventoryItems.Find(item => item.itemName.Contains("Key"));
+
+                if (KeyChecking != null)
+                {
+                    KeyChecking.itemQuantity--;
+
+                    if (KeyChecking.itemQuantity <= 0)
+                    {
+                        InventoryManager.Instance.inventoryItems.Remove(KeyChecking);
+                    }
+                }
+            }
         }
     }
 
