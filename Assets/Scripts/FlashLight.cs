@@ -1,7 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
-using Slider = UnityEngine.UI.Slider;
+using UnityEngine.UI;
 
 public class FlashLight : MonoBehaviour
 {
@@ -15,15 +14,14 @@ public class FlashLight : MonoBehaviour
     private bool offLight;
     private bool canDrain;
     private bool isBlinking;
-    private Coroutine blinkCoroutine;
-
-
+    private bool isFirstBatteryUse = true;
 
     private void Start()
     {
         offLight = false;
         canDrain = true;
         isBlinking = false;
+        isFirstBatteryUse = true;
         batteryCapacity = 100;
         lightComponent = flashlight.GetComponent<Light>();
         lightComponent.enabled = false;
@@ -33,21 +31,18 @@ public class FlashLight : MonoBehaviour
     private void Update()
     {
         FlashlightEnergyDrain();
-
         if (Input.GetKeyDown(KeyCode.F))
         {
-            if (!offLight && HasBatteryInInventory())
-            {
-                Invoke(nameof(FlashlightOn), 0.5f);
-            }
-            else if (offLight)
-            {
-                Invoke(nameof(FlashlightOff), 0.2f);
-            }
-            else if (!HasBatteryInInventory())
+            if (!HasBatteryInInventory())
             {
                 Debug.Log("No batteries in inventory!");
+                return;
             }
+
+            if (offLight)
+                Invoke(nameof(FlashlightOff), 0.2f);
+            else
+                Invoke(nameof(FlashlightOn), 0.5f);
         }
     }
 
@@ -63,12 +58,47 @@ public class FlashLight : MonoBehaviour
         lightComponent.enabled = false;
         offLight = false;
         canDrain = false;
+    }
 
-        // If we're blinking, stop the coroutine
-        if (isBlinking && blinkCoroutine != null)
+    void FlashlightEnergyDrain()
+    {
+        if (offLight && canDrain)
         {
-            StopCoroutine(blinkCoroutine);
-            isBlinking = false;
+            batteryCapacity -= batteryDrain * Time.deltaTime;
+            batterySlider.value = 1f - (batteryCapacity / 100f);
+
+            if (batteryCapacity < midpointBatteryDrain && batteryCapacity >= lowestCapacity)
+            { 
+                lightComponent.intensity = 2.5f;
+            }
+            else if (batteryCapacity >= 50)
+            {
+                lightComponent.intensity = 3f;
+            }
+            else if (batteryCapacity < lowestCapacity && !isBlinking)
+            {
+                isBlinking = true;
+                StartCoroutine(BlinkingFlashlight());
+            }
+        
+            if (batteryCapacity <= 0)
+            {
+                isBlinking = false;
+                FlashlightOff();
+                ConsumeBatteryFromInventory();
+            }
+        }
+    }
+
+    IEnumerator BlinkingFlashlight()
+    {
+        while (isBlinking)
+        {
+            lightComponent.enabled = false;
+            yield return new WaitForSeconds(0.12f);
+            lightComponent.enabled = true;
+            yield return new WaitForSeconds(0.12f);
+            lightComponent.enabled = false;
         }
     }
 
@@ -90,7 +120,11 @@ public class FlashLight : MonoBehaviour
                 InventoryManager.Instance.inventoryItems.Remove(batteryItem);
             }
 
-            batteryCapacity = 100;
+            if (isFirstBatteryUse)
+            {
+                batteryCapacity = 100;
+                isFirstBatteryUse = false;
+            }
 
             batterySlider.value = 1f;
 
@@ -103,78 +137,6 @@ public class FlashLight : MonoBehaviour
             {
                 Debug.Log("Used a battery. No more batteries in inventory.");
             }
-
-            if (!offLight)
-            {
-                FlashlightOn();
-            }
-        }
-    }
-
-    void FlashlightEnergyDrain()
-    {
-        if (offLight && canDrain)
-        {
-            batteryCapacity -= batteryDrain * Time.deltaTime;
-            batterySlider.value = 1f - (batteryCapacity / 100f);
-
-            if (batteryCapacity < midpointBatteryDrain && batteryCapacity >= lowestCapacity)
-            {
-                lightComponent.intensity = 2.5f;
-            }
-            else if (batteryCapacity >= 50)
-            {
-                lightComponent.intensity = 3f;
-            }
-            else if (batteryCapacity < lowestCapacity && !isBlinking)
-            {
-                isBlinking = true;
-                blinkCoroutine = StartCoroutine(BlinkingFlashlight());
-            }
-
-            if (batteryCapacity <= 0)
-            {
-                batteryCapacity = 0;
-                isBlinking = false;
-                StopCoroutine(BlinkingFlashlight());
-
-                FlashlightOff();
-
-                if (HasBatteryInInventory())
-                {
-                    ConsumeBatteryFromInventory();
-                    if (batteryCapacity > 0)
-                    {
-                        FlashlightOn();
-                    }
-                }
-                else
-                {
-                    Debug.Log("Flashlight battery depleted and no more batteries in inventory!");
-                }
-            }
-        }
-    }
-
-
-    IEnumerator BlinkingFlashlight()
-    {
-        while (isBlinking && batteryCapacity > 0)
-        {
-            Debug.Log("Flashlight blinking... Battery low!");
-            lightComponent.enabled = false;
-            yield return new WaitForSeconds(0.12f);
-            lightComponent.enabled = true;
-            yield return new WaitForSeconds(0.12f);
-        }
-
-        if (offLight && batteryCapacity > 0)
-        {
-            lightComponent.enabled = true;
-        }
-        else
-        {
-            lightComponent.enabled = false;
         }
     }
 }
