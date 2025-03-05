@@ -5,7 +5,7 @@ using UnityEngine;
 public enum TypeOfObject
 {
     Key,
-    BAttery,
+    Battery,
 
 }
 
@@ -13,9 +13,15 @@ public enum TypeOfObject
 
 public class Interactable : MonoBehaviour
 {
+    public static Interactable instance;
 
     public TypeOfObject typeOfObject;
+    public List<TypeOfObject> typeOfObjects = new List<TypeOfObject>();
 
+    void Awake()
+    {
+        instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {

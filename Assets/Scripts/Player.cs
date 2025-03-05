@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
 
     float SphereRadius = 10f;
 
-    [SerializeField] LayerMask collectableLayer;
+    [SerializeField] LayerMask InteractableLayer;
 
     bool CanyouStand;
 
@@ -58,10 +58,10 @@ public class Player : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 DoorController.instance.ToggleDoor();
-                
+
             }
         }
-        
+
 
     }
 
@@ -88,7 +88,7 @@ public class Player : MonoBehaviour
             playerRB.velocity = moveDirection * moveSpeed;
             if (moveDirection.magnitude >= 0.1f)
             {
-                Debug.Log("Entering");
+
                 Walkbounce();
             }
 
@@ -122,9 +122,9 @@ public class Player : MonoBehaviour
     public void crosshairInteractables()
     {
         RaycastHit hit;
-        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 1000f, collectableLayer))
+        if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 1000f, InteractableLayer))
         {
-            if (hit.collider.tag == "Key")
+            if (hit.collider == Interactable.instance.typeOfObjects.Contains(TypeOfObject.Key))
             {
                 Debug.Log("raycasting" + hit.collider.gameObject.name);
             }
@@ -139,14 +139,7 @@ public class Player : MonoBehaviour
         }
 
     }
-    public void PlayerCasting()
-    {
-        RaycastHit hit;
-        if (Physics.SphereCast(transform.position, SphereRadius, transform.forward, out hit, 100f, collectableLayer))
-        {
-            Debug.Log("Sherecast hit:" + hit.collider.name);
-        }
-    }
+
     void OnDrawGizmos()
     {
 
