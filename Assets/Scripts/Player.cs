@@ -51,7 +51,7 @@ public class Player : MonoBehaviour
     void Update()
     {
         MouseControl();
-
+        crosshairInteractables();
 
         if (door)
         {
@@ -124,13 +124,10 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(cameraTransform.position, cameraTransform.forward, out hit, 1000f, InteractableLayer))
         {
-            if (hit.collider == Interactable.instance.typeOfObjects.Contains(TypeOfObject.Key))
+            hit.collider.TryGetComponent<Interactable>(out Interactable it);
+            if (it != null)
             {
-                Debug.Log("raycasting" + hit.collider.gameObject.name);
-            }
-            else
-            {
-
+                Debug.Log("Hitting.. " + it.typeOfObject);
             }
         }
         else
@@ -142,8 +139,8 @@ public class Player : MonoBehaviour
 
     void OnDrawGizmos()
     {
-
-        Gizmos.DrawRay(cameraTransform.position, Vector3.forward * 100f);
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawRay(cameraTransform.position, cameraTransform.forward * 100f);
     }
 
     void OnCollisionEnter(Collision other)
