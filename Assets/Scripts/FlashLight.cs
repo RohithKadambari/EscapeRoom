@@ -120,17 +120,25 @@ public class FlashLight : MonoBehaviour
                 InventoryManager.Instance.inventoryItems.Remove(batteryItem);
             }
 
+            // Stop the blinking coroutine properly
+            StopCoroutine(BlinkingFlashlight());
+            isBlinking = false;
+            lightComponent.enabled = true; // Make sure light is on after stopping blinking
+
+            // Reset battery capacity
+            batteryCapacity = 100;
             if (isFirstBatteryUse)
             {
-                batteryCapacity = 100;
                 isFirstBatteryUse = false;
             }
 
-            batterySlider.value = 1f;
+            // Keep the inverse relationship for the slider
+            batterySlider.value = 0f;
 
             if (HasBatteryInInventory())
             {
-                var remainingBatteryItem = InventoryManager.Instance.inventoryItems.Find(item => item.itemName == "Battery");
+                var remainingBatteryItem =
+                    InventoryManager.Instance.inventoryItems.Find(item => item.itemName == "Battery");
                 Debug.Log("Used a battery. Remaining: " + remainingBatteryItem.itemQuantity);
             }
             else
