@@ -17,7 +17,7 @@ public class InventoryManager : MonoBehaviour
     {
         public string itemName;
         public int itemQuantity;
-        public Sprite icon; // Changed to Sprite for UI
+        public Sprite icon; 
 
         public CollectableItem(string itemName, int itemQuantity, Sprite icon = null)
         {
@@ -32,16 +32,16 @@ public class InventoryManager : MonoBehaviour
     {
         public string itemName;
         public int maxCapacity;
-        public Sprite icon; // Added icon field to store default icon
+        public Sprite icon; 
     }
 
     [System.Serializable]
     public class ItemUIPanel
     {
-        public string itemType; // e.g., "key", "battery"
+        public string itemType; 
         public GameObject panelObject;
         public Image iconImage;
-        public TMPro.TextMeshProUGUI quantityText; // For showing quantity
+        public TMPro.TextMeshProUGUI quantityText; 
     }
 
     public List<LevelWiseData> levelWiseDatas;
