@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     private Rigidbody playerRB;
 
     bool door = false;
+    bool keyfordoor = false;
 
 
     [SerializeField] private float moveSpeed = 5f;
@@ -145,15 +146,7 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if (other.gameObject.CompareTag("Key"))
-        {
-
-            string name = other.gameObject.tag;
-            keys++;
-            InventoryManager.Instance.AddItemsInInventory(name, 1);
-            Destroy(other.gameObject);
-
-        }
+        
         if (other.gameObject.CompareTag("Battery"))
         {
 
@@ -179,6 +172,7 @@ public class Player : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Door"))
             {
+                door = true;
 
                 if (Input.GetKey(KeyCode.E) && DoorClosed)
                 {
@@ -194,9 +188,18 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (other.gameObject.CompareTag("Door"))
+        if (other.gameObject.CompareTag("Key"))
         {
-            door = true;
+            keyfordoor = true;
+
+            if (Input.GetKey(KeyCode.E) && keyfordoor)
+            {
+                string name = other.gameObject.tag;
+                keys++;
+                InventoryManager.Instance.AddItemsInInventory(name, 1);
+                Destroy(other.gameObject);
+            }
+
         }
     }
     private void OnTriggerExit(Collider other)
