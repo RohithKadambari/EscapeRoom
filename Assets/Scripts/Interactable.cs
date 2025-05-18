@@ -7,10 +7,7 @@ public enum TypeOfObject
     Key,
     Battery,
     Door,
-
 }
-
-
 
 public class Interactable : MonoBehaviour
 {
