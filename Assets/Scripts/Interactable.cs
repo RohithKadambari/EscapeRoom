@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,10 +5,8 @@ public enum TypeOfObject
 {
     Key,
     Battery,
-    Door,
-
+    Door
 }
-
 
 
 public class Interactable : MonoBehaviour
@@ -17,17 +14,13 @@ public class Interactable : MonoBehaviour
     public static Interactable instance;
 
     public TypeOfObject typeOfObject;
-    public List<TypeOfObject> typeOfObjects = new List<TypeOfObject>();
+    public List<TypeOfObject> typeOfObjects = new();
 
-    void Awake()
+    private void Awake()
     {
-        if (Interactable.instance == null)
-        {
+        if (instance == null)
             instance = this;
-        }
         else
-        {
             Destroy(gameObject);
-        }
     }
 }
